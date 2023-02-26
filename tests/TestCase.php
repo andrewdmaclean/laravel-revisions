@@ -1,12 +1,12 @@
 <?php
 
-namespace Neurony\Revisions\Tests;
+namespace Andrewdmaclean\Revisions\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
-use Neurony\Revisions\Tests\Models\Author;
-use Neurony\Revisions\Tests\Models\Post;
-use Neurony\Revisions\Tests\Models\Tag;
+use Andrewdmaclean\Revisions\Tests\Models\Author;
+use Andrewdmaclean\Revisions\Tests\Models\Post;
+use Andrewdmaclean\Revisions\Tests\Models\Tag;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -50,7 +50,7 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase(Application $app)
     {
-        $this->loadMigrationsFrom(__DIR__.'/Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class TestCase extends Orchestra
 
         for ($i = 1; $i <= 3; $i++) {
             Tag::create([
-                'name' => 'Tag name '.$i,
+                'name' => 'Tag name ' . $i,
             ]);
         }
 
@@ -91,8 +91,8 @@ abstract class TestCase extends Orchestra
             $this->post->comments()->create([
                 'id' => $i,
                 'post_id' => $this->post->id,
-                'title' => 'Comment title '.$i,
-                'content' => 'Comment content '.$i,
+                'title' => 'Comment title ' . $i,
+                'content' => 'Comment content ' . $i,
                 'date' => Carbon::now(),
                 'active' => true,
             ]);

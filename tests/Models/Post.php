@@ -1,9 +1,9 @@
 <?php
 
-namespace Neurony\Revisions\Tests\Models;
+namespace Andrewdmaclean\Revisions\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Neurony\Revisions\Traits\HasRevisions;
+use Andrewdmaclean\Revisions\Traits\HasRevisions;
 
 class Post extends Model
 {
@@ -65,10 +65,10 @@ class Post extends Model
     }
 
     /**
-     * @return \Neurony\Revisions\Options\RevisionOptions
+     * @return \Andrewdmaclean\Revisions\Options\RevisionOptions
      */
     public function getRevisionOptions()
     {
-        return \Neurony\Revisions\Options\RevisionOptions::instance();
+        return \Andrewdmaclean\Revisions\Options\RevisionOptions::instance();
     }
 }

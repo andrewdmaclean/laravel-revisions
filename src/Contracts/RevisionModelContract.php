@@ -1,6 +1,6 @@
 <?php
 
-namespace Neurony\Revisions\Contracts;
+namespace Andrewdmaclean\Revisions\Contracts;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 

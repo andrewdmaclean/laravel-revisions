@@ -1,75 +1,47 @@
-# Package discontinued! Check out VARBOX.IO instead.
+This project is a fork of [Neurony/laravel-revisions](https://github.com/Neurony/laravel-revisions)
 
-Unfortunately this package is now discontinued.   
-Please check out [Varbox](https://varbox.io) (Laravel Admin Panel) for this functionality and much more.
+### Create revisions for any Eloquent model along with its relationships
 
-- Buy: [https://varbox.io/buy](https://varbox.io/buy)
-- Docs: [https://varbox.io/docs](https://varbox.io/docs)
-- Demo: [https://demo.varbox.test/admin](https://demo.varbox.test/admin)
-- Repo [https://github.com/VarboxInternational/varbox](https://github.com/VarboxInternational/varbox)
-
-Thank you! 
-
----
-
-### Create revisions for any Eloquent model along with its relationships   
- 
-[![Build Status](https://travis-ci.org/Neurony/laravel-revisions.svg?branch=master)](https://travis-ci.org/Neurony/laravel-revisions)
-[![StyleCI](https://github.styleci.io/repos/170915589/shield?branch=master)](https://github.styleci.io/repos/170915589)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Neurony/laravel-revisions/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Neurony/laravel-revisions/?branch=master)
-
-- [Overview](#overview)   
-- [Installation](#installation)   
-- [Setup](#setup)
-- [Usage](#usage)   
-- [Customisations](#customisations)   
-- [Events](#events)   
+-   [Overview](#overview)
+-   [Installation](#installation)
+-   [Setup](#setup)
+-   [Usage](#usage)
+-   [Customisations](#customisations)
+-   [Events](#events)
 
 ### Overview
 
-This package allows you to create revisions for any Eloquent model record along with its underlying relationships.    
-   
-* When a revision is created, it gets stored inside the `revisions` database table.    
-* Revisions are created automatically on model update, using the `updated` Eloquent event
-* Revisions can also can be created manually by using the `saveAsRevision()`   
-* When a record is force deleted, all its revisions will also be removed automatically, using the `deleted` Eloquent event   
+This package allows you to create revisions for any Eloquent model record along with its underlying relationships.
 
-As already mentioned, this package is capable of revisioning entire relationships alongside the model record.   
-   
-**The cool part is that it's also capable of re-creating the relationships records from ground up, if they were force deleted along the way, during the lifetime of that model record.** 
-   
+-   When a revision is created, it gets stored inside the `revisions` database table.
+-   Revisions are created automatically on model update, using the `updated` Eloquent event
+-   Revisions can also can be created manually by using the `saveAsRevision()`
+-   When a record is force deleted, all its revisions will also be removed automatically, using the `deleted` Eloquent event
+
+As already mentioned, this package is capable of revisioning entire relationships alongside the model record.
+
+**The cool part is that it's also capable of re-creating the relationships records from ground up, if they were force deleted along the way, during the lifetime of that model record.**
+
 Relationship types that can be revisioned: `hasOne`, `morphOne`, `hasMany`, `morphMany`, `belongsToMany`, `morphToMany`
 
 ### Installation
 
-Install the package via Composer (for **Laravel 6.0 and above**):
+Install the package via Composer (for **Laravel 8.0 and above**):
 
 ```
-composer require neurony/laravel-revisions
-```
-
-Install the package via Composer (for **Laravel 5.8**):
-
-```
-composer require neurony/laravel-revisions:3.1.0
-```
-
-Install the package via Composer (for **Laravel 5.7 and below**):
-
-```
-composer require neurony/laravel-revisions:2.0.0
+composer require andrewdmaclean/laravel-revisions
 ```
 
 Publish the config file with:
 
 ```
-php artisan vendor:publish --provider="Neurony\Revisions\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Andrewdmaclean\Revisions\ServiceProvider" --tag="config"
 ```
 
 Publish the migration file with:
 
 ```
-php artisan vendor:publish --provider="Neurony\Revisions\ServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Andrewdmaclean\Revisions\ServiceProvider" --tag="migrations"
 ```
 
 After the migration has been published you can create the `revisions` table by running:
@@ -82,11 +54,11 @@ php artisan migrate
 
 ##### Step 1
 
-Your Eloquent models should use the `Neurony\Revisions\Traits\HasRevisions` trait and the `Neurony\Revisions\Options\RevisionOptions` class.   
+Your Eloquent models should use the `Andrewdmaclean\Revisions\Traits\HasRevisions` trait and the `Andrewdmaclean\Revisions\Options\RevisionOptions` class.
 
-The trait contains an abstract method `getRevisionOptions()` that you must implement yourself.   
+The trait contains an abstract method `getRevisionOptions()` that you must implement yourself.
 
-Here's an example of how to implement the trait:   
+Here's an example of how to implement the trait:
 
 ```php
 <?php
@@ -94,8 +66,8 @@ Here's an example of how to implement the trait:
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Neurony\Revisions\Options\RevisionOptions;
-use Neurony\Revisions\Traits\HasRevisions;
+use Andrewdmaclean\Revisions\Options\RevisionOptions;
+use Andrewdmaclean\Revisions\Traits\HasRevisions;
 
 class YourModel extends Model
 {
@@ -115,17 +87,17 @@ class YourModel extends Model
 
 ##### Step 2
 
-Inside the `revisions.php` config file, write the full namespace of your `User` model class for the `user_model` config key.   
-   
-By default, this value is the FQN of Laravel's `User` model class (`\App\User`). You can also leave this `NULL` if your application doesn't have the concept of users.   
-   
-This bit is used by the `Neurony\Revisions\Traits\HasRevisions` trait to know who created which revisions.
+Inside the `revisions.php` config file, write the full namespace of your `User` model class for the `user_model` config key.
+
+By default, this value is the FQN of Laravel's `User` model class (`\App\User`). You can also leave this `NULL` if your application doesn't have the concept of users.
+
+This bit is used by the `Andrewdmaclean\Revisions\Traits\HasRevisions` trait to know who created which revisions.
 
 ### Usage
 
 ##### Fetch revisions
 
-You can fetch a model record's revisions by using the `revisions()` morph to many relation present on the `Neurony\Revisions\Traits\HasRevisions` trait.
+You can fetch a model record's revisions by using the `revisions()` morph to many relation present on the `Andrewdmaclean\Revisions\Traits\HasRevisions` trait.
 
 ```php
 $model = YourModel::find($id);
@@ -135,23 +107,23 @@ $revisions = $model->revisions;
 
 ##### Create revisions (automatically)
 
-Once you've used the `Neurony\Revisions\Traits\HasRevisions` trait in your Eloquent models, each time you update a model record, a revision containing its original attribute values will be created automatically using the `updated` Eloquent event: 
+Once you've used the `Andrewdmaclean\Revisions\Traits\HasRevisions` trait in your Eloquent models, each time you update a model record, a revision containing its original attribute values will be created automatically using the `updated` Eloquent event:
 
 ```php
 // model is state 1
 $model = YourModel::find($id);
 
 // model is state 2
-// a revision containing the model's state 1 is created 
+// a revision containing the model's state 1 is created
 $model->update(...);
 ```
 
-Alternatively, you can also store a revision each time you `create` a new model record, by using the `created` Eloquent event   
+Alternatively, you can also store a revision each time you `create` a new model record, by using the `created` Eloquent event  
 (see [Customisations](#customisations))
 
 ##### Create revisions (manually)
 
-If you ever need it, you can also create a revision manually, by using the `saveAsRevision()` method from the `Neurony\Revisions\Traits\HasRevisions` trait:
+If you ever need it, you can also create a revision manually, by using the `saveAsRevision()` method from the `Andrewdmaclean\Revisions\Traits\HasRevisions` trait:
 
 ```php
 $model = YourModel::find($id);
@@ -195,10 +167,10 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Limit the revisions
 
-You can limit the number of revisions each model record can have by using the `limitRevisionsTo()` method in your definition of the `getRevisionOptions()` method.   
-   
-This prevents ending up with thousands of revisions for a heavily updated record.   
-   
+You can limit the number of revisions each model record can have by using the `limitRevisionsTo()` method in your definition of the `getRevisionOptions()` method.
+
+This prevents ending up with thousands of revisions for a heavily updated record.
+
 When the limit is reached, after creating the new (latest) revision, the script automatically removes the oldest revision that model record has.
 
 ```php
@@ -216,8 +188,8 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Revision only certain fields
 
-If you don't want to revision all the model's fields (attributes), you can manually specify which fields you wish to store when creating a new revision, by using the `fieldsToRevision()` method in your definition of the `getRevisionOptions()` method.   
-   
+If you don't want to revision all the model's fields (attributes), you can manually specify which fields you wish to store when creating a new revision, by using the `fieldsToRevision()` method in your definition of the `getRevisionOptions()` method.
+
 Please note that the fields omitted won't be stored when creating the revision, but when rolling back to a revision, those ignored fields will become null / empty for the actual model record.
 
 ```php
@@ -235,11 +207,11 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Exclude certain fields from being revisioned
 
-Opposed to the `fieldsToRevision()` method, if you want to exclude certain fields when making a revision of an Eloquent model, use the `fieldsToNotRevision()` method in your definition of the `getRevisionOptions()` method   
-   
-**Please note that the `fieldsToRevision()` takes precedence over the `fieldsToNotRevision()`.   
-Don't use both of these methods in the same definition of the `getRevisionOptions` method.**   
-  
+Opposed to the `fieldsToRevision()` method, if you want to exclude certain fields when making a revision of an Eloquent model, use the `fieldsToNotRevision()` method in your definition of the `getRevisionOptions()` method
+
+**Please note that the `fieldsToRevision()` takes precedence over the `fieldsToNotRevision()`.  
+Don't use both of these methods in the same definition of the `getRevisionOptions` method.**
+
 Please note that the fields omitted won't be stored when creating the revision, but when rolling back to a revision, those ignored fields will become null / empty for the actual model record.
 
 ```php
@@ -257,8 +229,8 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Include timestamps when creating a revision
 
-By default, when creating a revision, the actual model's timestamps are automatically excluded from the actual revision data.   
-   
+By default, when creating a revision, the actual model's timestamps are automatically excluded from the actual revision data.
+
 If you'd like to store the model's timestamps when creating a revision, please use the `withTimestamps()` method in your definition of the `getRevisionOptions()` method.
 
 ```php
@@ -276,10 +248,10 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Revision relationships alongside the model record
 
-More often than not you will want to create a full copy in time of the model record and this includes revisioning its relations too (especially child relations).   
-   
-You can specify what relations to be revisioned alongside the model record by using the `relationsToRevision()` method in your definition of the `getRevisionOptions()` method.   
-   
+More often than not you will want to create a full copy in time of the model record and this includes revisioning its relations too (especially child relations).
+
+You can specify what relations to be revisioned alongside the model record by using the `relationsToRevision()` method in your definition of the `getRevisionOptions()` method.
+
 Please note that when rolling back the model record to a past revision, the specified relations will also be rolled back to their state when that revision happened (this includes re-creating a relation record from ground up if it was force deleted along the way, or deleting any future added related records up until the revision checkpoint).
 
 ```php
@@ -297,9 +269,9 @@ public function getRevisionOptions(): RevisionOptions
 
 ##### Disable creating a revision when rolling back
 
-By default, when rolling back to a past revision, a new revision is automatically created. This new revision contains the model record's state before the rollback happened.   
-   
-You can disable this behavior by using the `disableRevisioningWhenRollingBack()` method in your definition of the `getRevisionOptions()` method.   
+By default, when rolling back to a past revision, a new revision is automatically created. This new revision contains the model record's state before the rollback happened.
+
+You can disable this behavior by using the `disableRevisioningWhenRollingBack()` method in your definition of the `getRevisionOptions()` method.
 
 ```php
 /**
@@ -316,8 +288,8 @@ public function getRevisionOptions(): RevisionOptions
 
 ### Events
 
-The revision functionality comes packed with two Eloquent events: `revisioning` and `revisioned`   
-   
+The revision functionality comes packed with two Eloquent events: `revisioning` and `revisioned`
+
 You can implement these events in your Eloquent models as you would implement any other Eloquent events that come with the Laravel framework.
 
 ```php
@@ -326,8 +298,8 @@ You can implement these events in your Eloquent models as you would implement an
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Neurony\Revisions\Options\RevisionOptions;
-use Neurony\Revisions\Traits\HasRevisions;
+use Andrewdmaclean\Revisions\Options\RevisionOptions;
+use Andrewdmaclean\Revisions\Traits\HasRevisions;
 
 class YourModel extends Model
 {
@@ -350,7 +322,7 @@ class YourModel extends Model
             // your logic here
         });
     }
-    
+
     /**
      * Get the options for revisioning the model.
      *
@@ -365,21 +337,8 @@ class YourModel extends Model
 
 ### Credits
 
-- [Andrei Badea](https://github.com/zbiller)
-- [All Contributors](../../contributors)
-
-### Security
-
-If you discover any security related issues, please email andrei.badea@neurony.ro instead of using the issue tracker.
+-   [Andrei Badea](https://github.com/zbiller)
 
 ### License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.
-
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-### Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.

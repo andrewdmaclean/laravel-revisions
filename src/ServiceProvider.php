@@ -1,13 +1,13 @@
 <?php
 
-namespace Neurony\Revisions;
+namespace Andrewdmaclean\Revisions;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Neurony\Revisions\Contracts\RevisionModelContract;
-use Neurony\Revisions\Models\Revision;
+use Andrewdmaclean\Revisions\Contracts\RevisionModelContract;
+use Andrewdmaclean\Revisions\Models\Revision;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -49,7 +49,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function publishConfigs()
     {
         $this->publishes([
-            __DIR__.'/../config/revisions.php' => config_path('revisions.php'),
+            __DIR__ . '/../config/revisions.php' => config_path('revisions.php'),
         ], 'config');
     }
 
@@ -63,7 +63,7 @@ class ServiceProvider extends BaseServiceProvider
             $migration = database_path("migrations/{$timestamp}_create_revisions_table.php");
 
             $this->publishes([
-                __DIR__.'/../database/migrations/create_revisions_table.php.stub' => $migration,
+                __DIR__ . '/../database/migrations/create_revisions_table.php.stub' => $migration,
             ], 'migrations');
         }
     }
